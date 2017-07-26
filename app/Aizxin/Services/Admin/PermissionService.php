@@ -41,9 +41,9 @@ class PermissionService
 			$rememberKey = sha1($fullUrl);
 			// 每页显示条数
 			$pageSize = request('pageSize', config('admin.global.pagination.pageSize'));
-			$permissions = Cache::remember($rememberKey, 2, function () use ($pageSize) {
-            	return $this->permissionRepo->orderBy('id','asc')->paginate($pageSize,['id','name','slug'])->toArray();
-        	});
+			// $permissions = Cache::remember($rememberKey, 2, function () use ($pageSize) {
+            $permissions = $this->permissionRepo->orderBy('id','asc')->paginate($pageSize,['id','name','slug'])->toArray();
+   //      	});
 			$result->data = $permissions;
 		} catch (Exception $e) {
 			$result->code = 1001;

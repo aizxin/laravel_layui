@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>登录</title>
-        <link rel="stylesheet" href="{{ asset('back/plugin/layui/css/layui.css?v=1.0.9') }}" media="all">
-        <link rel="stylesheet" href="{{ asset('back/css/login.css') }}" />
+        <link rel="stylesheet" href="<?php echo e(asset('back/plugin/layui/css/layui.css?v=1.0.9')); ?>" media="all">
+        <link rel="stylesheet" href="<?php echo e(asset('back/css/login.css')); ?>" />
     </head>
 
     <body class="beg-login-bg" >
@@ -42,18 +42,18 @@
                 <p>技术 © <a href="https://chouchongkeji.com">臭虫科技</a></p>
             </footer>
         </div>
-        <script src="{{ asset('back/plugin/layui/layui.js') }}" charset="utf-8"></script>
-        <script src="{{ asset('back/plugin/es6-promise/promise.js') }}"></script>
-        <script src="{{ asset('back/plugin/axios/axios.min.js') }}" charset="utf-8"></script>
+        <script src="<?php echo e(asset('back/plugin/layui/layui.js')); ?>" charset="utf-8"></script>
+        <script src="<?php echo e(asset('back/plugin/es6-promise/promise.js')); ?>"></script>
+        <script src="<?php echo e(asset('back/plugin/axios/axios.min.js')); ?>" charset="utf-8"></script>
         <script>
             layui.config({
-                base: "{{ asset('back/plugin/layui') }}/"
+                base: "<?php echo e(asset('back/plugin/layui')); ?>/"
             }).use(['form'], function(){
                 var form = layui.form()
                     ,$ = layui.jquery
                     ,layer = layui.layer;
                 axios.defaults.headers.common = {
-                    'X-CSRF-TOKEN': "{{csrf_token()}}",
+                    'X-CSRF-TOKEN': "<?php echo e(csrf_token()); ?>",
                     'X-Requested-With': 'XMLHttpRequest'
                 };
 

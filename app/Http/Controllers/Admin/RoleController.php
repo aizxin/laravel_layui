@@ -37,7 +37,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return $this->service->permission();
+        // return $this->service->permission();
+        return view('admin.role.create');
     }
 
     /**
@@ -63,7 +64,9 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return $this->service->show($id);
+        $ids = implode(',',$this->service->findPermission($id));
+        $permission = $this->service->permission();
+        return view('admin.role.permission',compact('permission','ids','id'));
     }
 
     /**
@@ -76,7 +79,8 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        return $this->service->findPermission($id);
+        $role = $this->service->show($id);
+        return view('admin.role.edit',compact('role'));
     }
     /**
      *  [update description]

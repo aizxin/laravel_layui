@@ -23,8 +23,9 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(\App\Repositories\Contracts\PermissionRepository::class, \App\Repositories\Eloquent\PermissionRepositoryEloquent::class);
-        $this->app->bind(\App\Repositories\Contracts\RoleRepository::class, \App\Repositories\Eloquent\RoleRepositoryEloquent::class);
+        $this->app->bind(\Aizxin\Repositories\\Repositories\Contracts\PermissionRepository::class, \Aizxin\Repositories\Eloquent\PermissionRepositoryEloquent::class);
+        $this->app->bind(\Aizxin\Repositories\Contracts\RoleRepository::class, \Aizxin\Repositories\Eloquent\RoleRepositoryEloquent::class);
+        $this->app->bind(\Aizxin\Repositories\Contracts\UserRepository::class, \Aizxin\Repositories\Eloquent\UserRepositoryEloquent::class);
         //:end-bindings:
     }
 }

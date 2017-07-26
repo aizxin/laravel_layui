@@ -1,7 +1,6 @@
-@extends('layouts.admin')
-@section('style')
-@endsection
-@section('content')
+<?php $__env->startSection('style'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <div class="layui-body site-demo" id="permissionlist">
     <div class="layui-tab-content" style="padding: 16px;">
         <div class="container-fluid larry-wrapper">
@@ -9,47 +8,49 @@
             <section class="panel panel-padding">
                 <div class="group-button">
                     <select class="layui-btn layui-btn-small layui-btn-primary ajax-all" v-model="search.pageSize" v-on:change="changelist()">
-                        <option value="{{config('admin.global.pagination.pageSize')}}" selected>{!!trans('admin/setting.page')!!}</option>
+                        <option value="<?php echo e(config('admin.global.pagination.pageSize')); ?>" selected><?php echo trans('admin/setting.page'); ?></option>
                         <option value="50">50</option>
                         <option value="100">100</option>
                         <option value="200">200</option>
                     </select>
-                    @permission('permission.destroy')
+                    <?php if (Auth::check() && Auth::user()->hasPermission('permission.destroy')): ?>
                     <button class="layui-btn layui-btn-small layui-btn-danger ajax-all" @click="allDelete()">
-                        <i class="fa fa-trash"></i>{!!trans('admin/setting.all_delete')!!}
+                        <i class="fa fa-trash"></i><?php echo trans('admin/setting.all_delete'); ?>
+
                     </button>
-                    @endpermission
-                    @permission('permission.create')
+                    <?php endif; ?>
+                    <?php if (Auth::check() && Auth::user()->hasPermission('permission.create')): ?>
                     <button class="layui-btn layui-btn-small" @click="addhtml()">
-                        <i class="fa fa-plus-square"></i> {!!trans('admin/setting.add')!!}
+                        <i class="fa fa-plus-square"></i> <?php echo trans('admin/setting.add'); ?>
+
                     </button>
-                    @endpermission
+                    <?php endif; ?>
                 </div>
                 <div id="list" class="layui-form">
                     <table id="example" class="layui-table lay-even">
                         <thead>
                             <tr>
                                 <th width="30"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="allChoose" lay-skin="primary"></th>
-                                <th width="60">{!!trans('admin/permission.model.id')!!}</th>
-                                <th>{!!trans('admin/permission.model.name')!!}</th>
-                                <th>{!!trans('admin/permission.model.slug')!!}</th>
-                                <th>{!!trans('admin/setting.make')!!}</th>
+                                <th width="60"><?php echo trans('admin/permission.model.id'); ?></th>
+                                <th><?php echo trans('admin/permission.model.name'); ?></th>
+                                <th><?php echo trans('admin/permission.model.slug'); ?></th>
+                                <th><?php echo trans('admin/setting.make'); ?></th>
                             </tr>
                         </thead>
                         <tbody style="display: none">
                             <tr v-for="vo in permission">
-                                <td width="30"><input type="checkbox" data-name="@{{vo.id+'checkbox'}}" value="@{{vo.id}}" lay-skin="primary" onclick="elChoose()"></td>
+                                <td width="30"><input type="checkbox" data-name="{{vo.id+'checkbox'}}" value="{{vo.id}}" lay-skin="primary" onclick="elChoose()"></td>
                                 <td width="60"><em v-text="vo.id"></em></td>
                                 <td><em v-text="vo.name"></em></td>
                                 <td><em v-text="vo.slug"></em></td>
                                 <td width="152">
                                     <div class="layui-btn-group">
-                                    @permission('permission.edit')
+                                    <?php if (Auth::check() && Auth::user()->hasPermission('permission.edit')): ?>
                                         <button @click="edithtml(vo.id)" class="layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon"></i></button>
-                                    @endpermission
-                                    @permission('permission.destroy')
+                                    <?php endif; ?>
+                                    <?php if (Auth::check() && Auth::user()->hasPermission('permission.destroy')): ?>
                                         <button class="layui-btn layui-btn-danger layui-btn-small" @click="elDelete(vo.id)"><i class="layui-icon"></i></button>
-                                    @endpermission
+                                    <?php endif; ?>
                                     </div>
                                 </td>
                             </tr>
@@ -61,7 +62,9 @@
         </div>
     </div>
 </div>
-@endsection
-@section('my-js')
-<script src="{{ asset('back/js/permission/permission-index.js') }}"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('my-js'); ?>
+<script src="<?php echo e(asset('back/js/permission/permission-index.js')); ?>"></script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

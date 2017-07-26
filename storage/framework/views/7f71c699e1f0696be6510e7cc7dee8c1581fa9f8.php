@@ -1,4 +1,4 @@
-@extends('layouts.common') @section('style')
+ <?php $__env->startSection('style'); ?>
 <style>
 .bs-glyphicons-list {
     padding-left: 0;
@@ -36,7 +36,7 @@
     background-color: #563d7c
 }
 </style>
-@endsection @section('content')
+<?php $__env->stopSection(); ?> <?php $__env->startSection('content'); ?>
 <div class="site-demo">
     <div class="ibox-content icons-box">
         <div>
@@ -873,7 +873,7 @@
         </div>
     </div>
 </div>
-@endsection @section('my-js')
+<?php $__env->stopSection(); ?> <?php $__env->startSection('my-js'); ?>
 <script>
 layui.use(['jquery'],function(){
     var $ = layui.jquery,
@@ -901,4 +901,6 @@ layui.use(['jquery'],function(){
     });
 })
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.common', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

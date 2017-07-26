@@ -2,22 +2,18 @@
 Navicat MySQL Data Transfer
 
 Source Server         : phpstudy
-Source Server Version : 50547
+Source Server Version : 50553
 Source Host           : localhost:3306
-Source Database       : doucar
+Source Database       : kamun
 
 Target Server Type    : MYSQL
-Target Server Version : 50547
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-04-13 19:43:30
+Date: 2017-07-26 17:59:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Records of ads
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for article
@@ -55,10 +51,8 @@ CREATE TABLE `article_category` (
   KEY `status` (`status`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章分类表';
 
-
-
 -- ----------------------------
--- Records of member_sign
+-- Records of article_category
 -- ----------------------------
 
 -- ----------------------------
@@ -74,19 +68,6 @@ CREATE TABLE `migrations` (
 
 -- ----------------------------
 -- Records of migrations
--- ----------------------------
-INSERT INTO `migrations` VALUES ('1', '2014_10_12_000000_create_users_table', '1');
-INSERT INTO `migrations` VALUES ('2', '2014_10_12_100000_create_password_resets_table', '1');
-INSERT INTO `migrations` VALUES ('3', '2015_01_15_105324_create_roles_table', '1');
-INSERT INTO `migrations` VALUES ('4', '2015_01_15_114412_create_role_user_table', '1');
-INSERT INTO `migrations` VALUES ('5', '2015_01_26_115212_create_permissions_table', '1');
-INSERT INTO `migrations` VALUES ('6', '2015_01_26_115523_create_permission_role_table', '1');
-INSERT INTO `migrations` VALUES ('7', '2015_02_09_132439_create_permission_user_table', '1');
-
-
-
--- ----------------------------
--- Records of order
 -- ----------------------------
 
 -- ----------------------------
@@ -123,7 +104,7 @@ CREATE TABLE `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_slug_unique` (`slug`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of permissions
@@ -218,9 +199,8 @@ CREATE TABLE `permission_user` (
   KEY `permission_user_user_id_index` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
 -- ----------------------------
--- Records of question_tab_question
+-- Records of permission_user
 -- ----------------------------
 
 -- ----------------------------
@@ -237,13 +217,14 @@ CREATE TABLE `roles` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `roles_slug_unique` (`slug`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of roles
 -- ----------------------------
 INSERT INTO `roles` VALUES ('1', '超级管理员', 'admin', '超级管理员', '1', '2017-04-07 13:07:50', '2017-04-07 13:07:50');
 INSERT INTO `roles` VALUES ('2', '普通用户1', 'user1', '普通用户1', '1', '2017-04-07 13:07:50', '2017-04-13 19:41:12');
+INSERT INTO `roles` VALUES ('4', '11', '1', '1', '1', '2017-07-26 16:21:50', '2017-07-26 16:33:42');
 
 -- ----------------------------
 -- Table structure for role_user
@@ -267,3 +248,28 @@ INSERT INTO `role_user` VALUES ('1', '1', '1', '2017-04-07 13:07:50', '2017-04-0
 INSERT INTO `role_user` VALUES ('2', '2', '2', '2017-04-07 13:07:51', '2017-04-07 13:07:51');
 INSERT INTO `role_user` VALUES ('3', '2', '3', '2017-04-07 13:07:51', '2017-04-07 13:07:51');
 INSERT INTO `role_user` VALUES ('4', '2', '4', '2017-04-07 13:07:51', '2017-04-07 13:07:51');
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_username_unique` (`username`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES ('1', 'admin', '管理员', '709344897@qq.com', '$2y$10$ijzRzxk3mSJuQi0MPcpyZeDmePGk6lu0TLBWo7kVivuvJocJ6QOBa', 'wLgFeNe45c3kaMFHgjDEidCJHePkZO5lWFZgv2h05mQ7HSU9FtjZ7uhoIcCe', '2017-04-07 13:07:50', '2017-04-07 13:07:50');
+INSERT INTO `users` VALUES ('2', 'Kiley', 'Pierre Smitham', 'metz.corine@example.net', '$2y$10$oVtKN2BNE/A6EZP6bTUreu6gX1r9vGyfdh.JznKomCiD7J1NmVd62', 'uudegKrfcX', '2017-04-07 13:07:51', '2017-04-07 13:07:51');
+INSERT INTO `users` VALUES ('3', 'Joel', 'Spencer Kirlin', 'ymclaughlin@example.com', '$2y$10$oVtKN2BNE/A6EZP6bTUreu6gX1r9vGyfdh.JznKomCiD7J1NmVd62', 'xqMD4dFCxB', '2017-04-07 13:07:51', '2017-04-07 13:07:51');
+INSERT INTO `users` VALUES ('4', 'Lelah1', 'Lucinda Moore', 'walsh.penelope@example.net', '$2y$10$gn/tO/N1bFoX7r5VOCA3d.kE.UVsOlNLhFQC/b7SqBj8WIGwaeUj.', '7OKwsN0RHT', '2017-04-07 13:07:51', '2017-04-17 14:47:10');

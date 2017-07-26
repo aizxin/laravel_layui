@@ -46,9 +46,9 @@ class RoleService
 			$rememberKey = sha1($fullUrl);
 			// 每页显示条数
 			$pageSize = request('pageSize', config('admin.global.pagination.pageSize'));
-			$role = Cache::remember($rememberKey, 2, function () use ($pageSize) {
-            	return $this->roleRepo->orderBy('id','asc')->paginate($pageSize,['id','name','slug'])->toArray();
-        	});
+			// $role = Cache::remember($rememberKey, 2, function () use ($pageSize) {
+ 			$role = $this->roleRepo->orderBy('id','asc')->paginate($pageSize,['id','name','slug'])->toArray();
+   //      	});
 			$result->data = $role;
 		} catch (Exception $e) {
 			$result->code = 1001;
@@ -155,16 +155,7 @@ class RoleService
 	 */
 	public function show($id)
 	{
-		$result = new Result();
-		try {
-			$role = $this->roleRepo->find($id,['id','name','slug','description']);
-			$result->role = $role;
-		} catch (Exception $e) {
-			$result->code = 400;
-			$result->message = trans('admin/alert.role.destroy_error');
-			$result->status = 'error';
-		}
-		return $result->toJson();
+		return $this->roleRepo->find($id,['id','name','slug','description']);
 	}
 	/**
 	 *  [permission 权限节点]
@@ -175,16 +166,13 @@ class RoleService
 	 */
 	public function permission()
 	{
-		$result = new Result();
 		if(Cache::has('permission')){
-			$result->data = Cache::get('permission');
-			return $result->toJson();
+			return  Cache::get('permission');
 		}
 		$permission = $this->permissionRepo->all(['id','name','slug','parent_id'])->toArray();
 		$data = sort_parent($permission);
 		Cache::forever('permission',$data);
-		$result->data = $data;
-		return $result->toJson();
+		return $data;
 	}
 	/**
 	 *  [rolePermission 角色权限添加]
@@ -223,21 +211,13 @@ class RoleService
 	 */
 	public function findPermission($id)
 	{
-		$result = new Result();
-		try {
-			$role = $this->roleRepo->with('permissions')->find($id,['id','name','slug','description'])->toArray();
-			if ($role['permissions']) {
-				$permission = [];
-				foreach ($role['permissions'] as $k => $v) {
-					$permission[] = $v['id'];
-				}
+		$role = $this->roleRepo->with('permissions')->find($id,['id','name','slug','description'])->toArray();
+		$permission = [];
+		if ($role['permissions']) {
+			foreach ($role['permissions'] as $k => $v) {
+				$permission[] = $v['id'];
 			}
-			$result->permission = $permission;
-		} catch (Exception $e) {
-			$result->code = 400;
-			$result->message = 'error:show-查询角色数据失败';
-			$result->status = 'error';
 		}
-		return $result->toJson();
+		return $permission;
 	}
 }

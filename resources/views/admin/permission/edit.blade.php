@@ -1,16 +1,11 @@
-@extends('layouts.admin')
+@extends('layouts.common')
 @section('style')
 @endsection
 @section('content')
 @inject('menuPresenter','Aizxin\Presenters\MenuPresenter')
-<div class="layui-body site-demo">
-    <div class="layui-tab-content" id="addpermission" style="padding: 50px;">
+<div class="site-demo">
+    <div class="layui-tab-content" id="addpermission" style="padding: 20px;">
         <section class="panel panel-padding">
-            <div class="group-button">
-                <span class="layui-btn layui-btn-small layui-btn-primary ajax-all">
-                   {!!trans('admin/permission.edit')!!}
-                </span>
-            </div>
             <form class="layui-form" style="padding: 17px;">
                 <input type="hidden" name="id" value="{{$per->id}}">
                 <div class="layui-form-item">
@@ -58,13 +53,12 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">{!!trans('admin/permission.model.description')!!}</label>
                     <div class="layui-input-block">
-                        <textarea placeholder="{!!trans('admin/permission.placeholder.description')!!}" name="description" class="layui-textarea" style="width: 20%">{{$per->description}}</textarea>
+                        <textarea placeholder="{!!trans('admin/permission.placeholder.description')!!}" name="description" class="layui-textarea" style="width: 60%">{{$per->description}}</textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn" lay-submit="" lay-filter="editpermissionupdate">{!!trans('admin/setting.resave')!!}</button>
-                        <!-- <button type="reset" class="layui-btn layui-btn-primary">{!!trans('admin/setting.reset')!!}</button> -->
                         <a onclick="window.history.go(-1)" class="layui-btn layui-btn-primary">{!!trans('admin/setting.goback')!!}</a>
                     </div>
                 </div>
@@ -74,10 +68,6 @@
 </div>
 @endsection
 @section('my-js')
-<script>
-    layui.extend({
-        'permission-add': 'js/permission/permission-add'
-    }).use(['permission-add'])
-</script>
+<script src="{{ asset('back/js/permission/permission-add.js') }}"></script>
 @endsection
 

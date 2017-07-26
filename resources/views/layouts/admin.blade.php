@@ -10,8 +10,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
 
-    <link rel="stylesheet" href="{{ asset('back/layui/css/layui.css?v=1.0.9') }}" media="all">
-    <link rel="stylesheet" href="{{ asset('back/layui/css/global.css') }}" media="all">
+    <link rel="stylesheet" href="{{ asset('back/plugin/layui/css/layui.css?v=1.0.9') }}" media="all">
+    <link rel="stylesheet" href="{{ asset('back/plugin/layui/css/global.css') }}" media="all">
     <link rel="stylesheet" href="{{ asset('back/css/font-awesome.min.css') }}" media="all">
     <link rel="stylesheet" href="{{ asset('back/css/main.css?v1.3.3') }}" media="all">
     @yield('style')
@@ -29,19 +29,15 @@
     </div>
     <div class="site-mobile-shade"></div>
 </body>
-<script src="{{ asset('back/layui/layui.js') }}" charset="utf-8"></script>
-<script src="{{ asset('back/vue.js') }}" charset="utf-8"></script>
-<script src="{{ asset('back/axios.min.js') }}" charset="utf-8"></script>
-<script src="{{ asset('back/aizxin.js') }}" charset="utf-8"></script>
+<script src="{{ asset('back/plugin/layui/layui.js') }}" charset="utf-8"></script>
+<script src="{{ asset('back/plugin/vue.min.js') }}" charset="utf-8"></script>
+<script src="{{ asset('back/plugin/es6-promise/promise.js') }}"></script>
+<script src="{{ asset('back/plugin/axios/axios.min.js') }}" charset="utf-8"></script>
+<script src="{{ asset('back/js/config.js') }}" charset="utf-8"></script>
 <script>
-    layui.config({
-        base: "{{ asset('back/layui') }}/"
-    }).extend({
-        modal: 'module/modal',
-        global: 'module/global',
-    });
     window.conf ={
-        APP:'{{env("APP_URL")}}'
+        APP:'<?php echo "http://".$_SERVER["HTTP_HOST"];?>',
+        QINIU_DOMAINS_DEFAULT:'{{env("QINIU_DOMAINS_DEFAULT")}}'
     };
     axios.defaults.headers.common = {
         'X-CSRF-TOKEN': "{{csrf_token()}}",

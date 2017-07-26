@@ -1,16 +1,11 @@
-@extends('layouts.admin')
+@extends('layouts.common')
 @section('style')
 @endsection
 @section('content')
 @inject('menuPresenter','Aizxin\Presenters\MenuPresenter')
-<div class="layui-body site-demo">
-    <div class="layui-tab-content" id="addpermission" style="padding: 50px;">
+<div class="site-demo">
+    <div class="layui-tab-content" id="addpermission" style="padding: 20px;">
         <section class="panel panel-padding">
-            <div class="group-button">
-                <span class="layui-btn layui-btn-small layui-btn-primary ajax-all">
-                   {!!trans('admin/permission.create')!!}
-                </span>
-            </div>
             <form class="layui-form" style="padding: 17px;">
                 <div class="layui-form-item">
                     <label class="layui-form-label">{!!trans('admin/permission.model.parent_id')!!}</label>
@@ -57,7 +52,7 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">{!!trans('admin/permission.model.description')!!}</label>
                     <div class="layui-input-block">
-                        <textarea placeholder="{!!trans('admin/permission.placeholder.description')!!}" name="description" class="layui-textarea" style="width: 20%"></textarea>
+                        <textarea placeholder="{!!trans('admin/permission.placeholder.description')!!}" name="description" class="layui-textarea" style="width: 60%"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -73,10 +68,6 @@
 </div>
 @endsection
 @section('my-js')
-<script>
-    layui.extend({
-        'permission-add': 'js/permission/permission-add'
-    }).use(['permission-add']);
-</script>
+<script src="{{ asset('back/js/permission/permission-add.js') }}"></script>
 @endsection
 
