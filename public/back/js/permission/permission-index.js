@@ -19,7 +19,7 @@ layui.define(['global', 'lang', 'form', 'laypage', 'aizxin'], function(exports) 
                 pages: 10
             },
             created: function() {
-                this.list()
+                this.list();
             },
             methods: {
                 addhtml: function() {
@@ -37,14 +37,15 @@ layui.define(['global', 'lang', 'form', 'laypage', 'aizxin'], function(exports) 
                     var _this = this;
                     axios.post(aizxin.U('permission/index'), this.search).then(function(response) {
                         if (_this.pages != response.data.data.last_page) {
-                            _this.$set('pages', response.data.data.last_page)
+                            _this.$set('pages', response.data.data.last_page);
                             _this.page();
                         }
-                        setTimeout(function() {
-                            layer.close(index);
-                            $('#list').find('tbody').css('display', 'table-row-group');
-                            _this.$set('permission', response.data.data.data);
-                        }, 1000);
+                        layer.close(index);
+                        $('#list').find('tbody').css('display', 'table-row-group');
+                        _this.$set('permission', response.data.data.data);
+                        _this.$nextTick(function() {
+                            form.render();
+                        });
                     }).catch(function(error) {
                         console.log(error);
                     });
@@ -69,11 +70,11 @@ layui.define(['global', 'lang', 'form', 'laypage', 'aizxin'], function(exports) 
                     var child = $('#list').find('tbody input[type="checkbox"]');
                     child.each(function(index, item) {
                         if (item.checked) {
-                            ids.push(item.value)
+                            ids.push(item.value);
                         }
                     });
                     if (!ids.length) {
-                        aizxin.msgE(5, lang.permission.delE)
+                        aizxin.msgE(5, lang.permission.delE);
                         return;
                     };
                     this.elDelete(ids.join(","));
@@ -86,7 +87,7 @@ layui.define(['global', 'lang', 'form', 'laypage', 'aizxin'], function(exports) 
                             if (response.data.code == 200) {
                                 aizxin.msgS(6, response.data.message, function() {
                                     _this.list();
-                                })
+                                });
                             } else {
                                 aizxin.msgE(5, response.data.message);
                             }

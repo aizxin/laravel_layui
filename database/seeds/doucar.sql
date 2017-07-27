@@ -20,15 +20,18 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
-  `articleId` int(11) NOT NULL AUTO_INCREMENT COMMENT '文章id',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '文章id',
   `articleCategoryId` int(11) NOT NULL COMMENT '文章分类的id',
   `title` varchar(255) DEFAULT NULL COMMENT '文章标题',
+  `author` varchar(255) DEFAULT NULL,
+  `thumb` varchar(255) DEFAULT NULL COMMENT '文章图片',
+  `rank` int(11) DEFAULT '555' COMMENT '排序顺序',
   `content` text COMMENT '文章内容',
   `created_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '添加时间',
   `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`articleId`),
+  PRIMARY KEY (`id`),
   KEY `cid` (`articleCategoryId`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章表';
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='文章表';
 
 -- ----------------------------
 -- Records of article
@@ -39,17 +42,25 @@ CREATE TABLE `article` (
 -- ----------------------------
 DROP TABLE IF EXISTS `article_category`;
 CREATE TABLE `article_category` (
-  `articleCategoryId` int(11) NOT NULL AUTO_INCREMENT COMMENT '文章分类Id',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '文章分类Id',
   `parent_id` int(11) DEFAULT NULL COMMENT '文章分类父id',
   `name` varchar(255) NOT NULL COMMENT '文章分类名称',
   `status` int(1) DEFAULT '1' COMMENT '0:待处理1:显示,-1:隐藏',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '添加时间',
   `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`articleCategoryId`),
+  PRIMARY KEY (`id`),
   KEY `parent_id` (`parent_id`),
   KEY `name` (`name`),
   KEY `status` (`status`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章分类表';
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='文章分类表';
+
+-- ----------------------------
+-- Records of article_category
+-- ----------------------------
+INSERT INTO `article_category` VALUES ('1', '0', '常见问题', '1', '2017-04-19 12:43:45', '2017-05-03 14:42:23');
+INSERT INTO `article_category` VALUES ('2', '0', '学车须知', '1', '2017-04-19 12:57:34', '2017-04-19 12:58:35');
+INSERT INTO `article_category` VALUES ('3', '0', '关于我们', '1', '2017-04-19 12:57:50', '2017-04-19 12:57:50');
+INSERT INTO `article_category` VALUES ('4', '0', '法律', '1', '2017-04-21 20:17:41', '2017-04-21 20:17:41');
 
 -- ----------------------------
 -- Records of article_category
@@ -104,7 +115,7 @@ CREATE TABLE `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_slug_unique` (`slug`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of permissions
@@ -130,8 +141,22 @@ INSERT INTO `permissions` VALUES ('18', '4', '0', '管理员添加操作', 'user
 INSERT INTO `permissions` VALUES ('19', '4', '0', '管理员更新视图', 'user.edit', '管理员更新视图', null, '1', null, '2017-04-13 13:18:14', '2017-04-13 13:18:14');
 INSERT INTO `permissions` VALUES ('20', '4', '0', '管理员更新操作', 'user.update', '管理员更新操作', null, '1', null, '2017-04-13 13:18:40', '2017-04-13 13:18:40');
 INSERT INTO `permissions` VALUES ('21', '4', '0', '管理员删除操作', 'user.destroy', '管理员删除操作', null, '1', null, '2017-04-13 13:19:58', '2017-04-13 13:19:58');
-INSERT INTO `permissions` VALUES ('22', '0', '0', 'demo', 'demo', 'demo', null, '0', null, '2017-04-13 16:39:42', '2017-04-13 16:39:42');
-INSERT INTO `permissions` VALUES ('24', '5', '0', '角色权限', 'role.show', '角色权限', null, '1', null, '2017-04-13 18:53:10', '2017-04-13 18:53:10');
+INSERT INTO `permissions` VALUES ('22', '5', '0', '权限分配', 'role.permission', '权限分配', null, '0', null, '2017-04-13 16:39:42', '2017-07-27 14:07:38');
+INSERT INTO `permissions` VALUES ('23', '5', '0', '角色权限详情', 'role.show', '角色权限', null, '1', null, '2017-04-13 18:53:10', '2017-07-27 10:35:04');
+INSERT INTO `permissions` VALUES ('24', '4', '0', '管理员详情', 'user.show', '管理员详情', null, '1', null, '2017-07-27 14:06:05', '2017-07-27 14:06:05');
+INSERT INTO `permissions` VALUES ('25', '4', '0', '角色分配', 'user.role', '管理员详情', null, '1', null, '2017-07-27 14:06:48', '2017-07-27 17:19:14');
+INSERT INTO `permissions` VALUES ('26', '0', '1', '文章管理', 'article.manage', '文章管理', 'fa fa-calendar-o', '1', null, '2017-04-13 16:39:42', '2017-04-17 13:24:56');
+INSERT INTO `permissions` VALUES ('27', '26', '1', '文章分类', 'article.category.index', '文章分类管理', 'fa fa-clone', '1', null, '2017-04-17 16:10:38', '2017-04-25 12:03:57');
+INSERT INTO `permissions` VALUES ('28', '27', '0', '文章分类添加操作', 'article.category.store', '文章分类添加操作', null, '1', null, '2017-04-18 12:17:03', '2017-04-18 12:17:03');
+INSERT INTO `permissions` VALUES ('29', '27', '0', '文章分类添加视图', 'article.category.create', '文章添加视图', null, '1', null, '2017-04-18 12:18:11', '2017-04-18 12:18:11');
+INSERT INTO `permissions` VALUES ('30', '27', '0', '文章分类更新视图', 'article.category.edit', '文章分类更新视图', null, '1', null, '2017-04-18 12:19:17', '2017-04-18 12:19:17');
+INSERT INTO `permissions` VALUES ('31', '27', '0', '文章分类删除', 'article.category.destroy', '文章分类删除', null, '1', null, '2017-04-18 12:20:24', '2017-04-18 12:20:24');
+INSERT INTO `permissions` VALUES ('32', '26', '1', '文章列表', 'article.index', '文章列表', 'fa fa-reorder', '1', null, '2017-04-19 12:05:05', '2017-04-19 12:05:05');
+INSERT INTO `permissions` VALUES ('33', '32', '0', '文章添加视图', 'article.create', '文章添加视图', null, '1', null, '2017-04-19 12:06:23', '2017-04-19 12:06:23');
+INSERT INTO `permissions` VALUES ('34', '32', '0', '文章添加操作', 'article.store', '文章添加操作', null, '1', null, '2017-04-19 12:07:10', '2017-04-19 12:07:10');
+INSERT INTO `permissions` VALUES ('35', '32', '0', '文章更新视图', 'article.edit', '文章更新视图', null, '1', null, '2017-04-19 12:07:57', '2017-04-19 12:07:57');
+INSERT INTO `permissions` VALUES ('36', '32', '0', '文章更新操作', 'article.update', '文章更新操作', null, '1', null, '2017-04-19 12:09:18', '2017-04-19 12:09:18');
+INSERT INTO `permissions` VALUES ('37', '32', '0', '文章删除', 'article.destroy', '文章删除', null, '1', null, '2017-04-19 12:10:02', '2017-04-19 13:05:20');
 
 -- ----------------------------
 -- Table structure for permission_role

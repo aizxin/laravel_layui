@@ -57,7 +57,7 @@ ul.ztree>li>a>span {
             <input type="hidden" name="ids" id="ids" value="<?php echo e($ids); ?>">
             <form class="layui-form">
                 <div class="layui-form-item">
-                    <input type="hidden" name="id" id="<?php echo e($id); ?>">
+                    <input type="hidden" name="id" value="<?php echo e($id); ?>">
                     <ul id="ztree" class="layui-box layui-tree ztree loading">
                     <?php $__currentLoopData = $permission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li><a><cite><input type="checkbox" name="role<?php echo e($item['id']); ?>" id="role<?php echo e($item['id']); ?>" title="<?php echo e($item['name']); ?>" value="<?php echo e($item['id']); ?>" lay-filter="role" lay-skin="primary"/></cite></a>

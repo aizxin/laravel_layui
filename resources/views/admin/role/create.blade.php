@@ -3,7 +3,7 @@
 @endsection
 @section('content')
 <div class="site-demo">
-    <div class="layui-tab-content" id="addpermission" style="padding: 20px;">
+    <div class="layui-tab-content" id="addrole" style="padding: 20px;">
         <section class="panel panel-padding">
             <form class="layui-form">
                 <div class="layui-form-item">

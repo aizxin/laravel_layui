@@ -107,10 +107,10 @@ class UserService {
 			$rememberKey = sha1($fullUrl);
 			// 每页显示条数
 			$pageSize = request('pageSize', config('admin.global.pagination.pageSize'));
-			$role = Cache::remember($rememberKey, 2, function () use ($pageSize) {
-				return $this->userRepo->orderBy('id', 'asc')->paginate($pageSize, ['id', 'name', 'username'])->toArray();
-			});
-			$result->data = $role;
+			// $role = Cache::remember($rememberKey, 2, function () use ($pageSize) {
+				$user = $this->userRepo->orderBy('id', 'asc')->paginate($pageSize, ['id', 'name', 'username'])->toArray();
+			// });
+			$result->data = $user;
 		} catch (Exception $e) {
 			$result->code = 1001;
 			$result->status = 500;
@@ -154,16 +154,7 @@ class UserService {
 	 *  @return   [type]                       [description]
 	 */
 	public function show($id) {
-		$result = new Result();
-		try {
-			$user = $this->userRepo->find($id, ['id', 'name', 'username', 'password']);
-			$result->user = $user;
-		} catch (Exception $e) {
-			$result->code = 400;
-			$result->message = trans('admin/alert.user.destroy_error');
-			$result->status = 'error';
-		}
-		return $result->toJson();
+		return $this->userRepo->find($id, ['id', 'name', 'username', 'password']);
 	}
 	/**
 	 *  [update 管理员修改]
@@ -207,15 +198,12 @@ class UserService {
      */
     public function role()
     {
-        $result = new Result();
         if(Cache::has('role')){
-            $result->data = Cache::get('role');
-            return $result->toJson();
+            return Cache::get('role');
         }
         $role = $this->roleRepo->all(['id','name'])->toArray();
         Cache::forever('role',$role);
-        $result->data = $role;
-        return $result->toJson();
+        return $role;
     }
     /**
      *  [getRole 管理员的角色]
@@ -227,10 +215,8 @@ class UserService {
      */
     public function getRole($id)
     {
-        $result = new Result();
-        $data = $this->userRepo->find($id)->getRoles();
-        $result->data = count($data)?$data[0]:[];
-        return $result->toJson();
+        $data = $this->userRepo->find($id)->getRoles()->toArray();
+        return count($data)?$data[0]:[];
     }
     /**
      *  [syncRoles 管理员的角色分配]

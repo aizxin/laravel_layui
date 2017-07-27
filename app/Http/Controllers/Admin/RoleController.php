@@ -37,7 +37,6 @@ class RoleController extends Controller
      */
     public function create()
     {
-        // return $this->service->permission();
         return view('admin.role.create');
     }
 

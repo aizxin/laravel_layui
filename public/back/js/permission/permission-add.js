@@ -7,7 +7,7 @@ layui.define(['form', 'aizxin', 'lang'], function(exports) {
 		//监听提交
 		form.on('submit(addpermissionstore)', function(data) {
 			data.field.ismenu = data.field.ismenu != undefined ? 1 : 0;
-			var index = layer.load(1);
+			var index = aizxin.load(1);
 			axios.post(aizxin.U('permission'), data.field)
 				.then(function(response) {
 					layer.close(index);
@@ -34,7 +34,7 @@ layui.define(['form', 'aizxin', 'lang'], function(exports) {
 		//监听提交
 		form.on('submit(editpermissionupdate)', function(data) {
 			data.field.ismenu = data.field.ismenu != undefined ? 1 : 0;
-			var index = layer.load(1);
+			var index = aizxin.load(1);
 			axios.put(aizxin.U('permission') + "/" + data.field.id, data.field)
 				.then(function(response) {
 					layer.close(index);

@@ -57,8 +57,11 @@ class UserController extends Controller {
 	 *  @param    [type]                   $id [description]
 	 *  @return   [type]                       [description]
 	 */
-	public function show($id) {
-		return $this->service->show($id);
+	public function show($id)
+	{
+		$role = $this->service->getRole($id);
+		$list = $this->service->role();
+		return view('admin.user.role',compact('list','role','id'));
 	}
 	/**
 	 *  [update 管理员更新]
@@ -81,7 +84,7 @@ class UserController extends Controller {
      */
     public function create()
     {
-        return $this->service->role();
+    	return view('admin.user.create');
     }
     /**
      *  [edit 获取管理员的角色]
@@ -93,7 +96,8 @@ class UserController extends Controller {
      */
     public function edit($id)
     {
-        return $this->service->getRole($id);
+    	$user = $this->service->show($id);
+    	return view('admin.user.edit',compact('user'));
     }
     /**
      *  [role 管理员的角色分配]

@@ -31,19 +31,19 @@ layui.define(['global', 'form', 'laypage', 'laytpl', 'aizxin', 'lang'], function
                 },
                 // 列表
                 list: function() {
-                    var index = layer.load(1);
+                    var index = aizxin.load(1);
                     var _this = this;
                     axios.post(aizxin.U('role/index'), this.search).then(function(response) {
                         if (_this.pages != response.data.data.last_page) {
                             _this.$set('pages', response.data.data.last_page);
                             _this.page();
                         }
-                        setTimeout(function() {
-                            layer.close(index);
-                            $('#list').find('tbody').css('display', 'table-row-group');
-                            _this.$set('role', response.data.data.data);
-                        }, 1000);
-                        form.render();
+                        layer.close(index);
+                        $('#list').find('tbody').css('display', 'table-row-group');
+                        _this.$set('role', response.data.data.data);
+                        _this.$nextTick(function() {
+                            form.render();
+                        });
                     }).catch(function(error) {
                         console.log(error);
                     });
@@ -69,11 +69,11 @@ layui.define(['global', 'form', 'laypage', 'laytpl', 'aizxin', 'lang'], function
                     var child = $('#list').find('tbody input[type="checkbox"]');
                     child.each(function(index, item) {
                         if (item.checked) {
-                            ids.push(item.value)
+                            ids.push(item.value);
                         }
                     });
                     if (!ids.length) {
-                        aizxin.msgE(5, lang.role.delE)
+                        aizxin.msgE(5, lang.role.delE);
                         return;
                     };
                     this.elDelete(ids.join(","));
@@ -87,7 +87,7 @@ layui.define(['global', 'form', 'laypage', 'laytpl', 'aizxin', 'lang'], function
                             if (response.data.code == 200) {
                                 aizxin.msgS(6, response.data.message, function() {
                                     _this.list();
-                                })
+                                });
                             } else {
                                 aizxin.msgE(5, response.data.message);
                             }
@@ -107,45 +107,6 @@ layui.define(['global', 'form', 'laypage', 'laytpl', 'aizxin', 'lang'], function
                 // 权限分配
                 permission: function(id) {
                     aizxin.open(lang.role.permission, aizxin.U('role') + '/' + id, ['800px', '800px']);
-                    // var indexload = layer.load(1);
-                    // var permission = [];
-                    // layer.open({
-                    //     type: 1,
-                    //     title: '角色权限',
-                    //     full: false,
-                    //     shadeClose: true,
-                    //     shade: 0.3,
-                    //     content: $('#rolepermissionhtml'),
-                    //     area: ['800px', '800px'],
-                    //     anim: 5,
-                    //     success: function(layero, index) {
-                    //         axios.get(aizxin.U('role') + '/' + id + '/edit').then(function(response) {
-                    //             if (response.data.code == 200) {
-                    //                 permission = response.data.permission;
-                    //             }
-                    //         });
-                    //         axios.get(aizxin.U('role/create')).then(function(response) {
-                    //                 layer.close(indexload);
-                    //                 var getTpl = rolepermissionhtml.innerHTML;
-                    //                 laytpl(getTpl).render(response.data, function(html) {
-                    //                     rolepermissionhtml.innerHTML = html;
-                    //                     if (permission.length) {
-                    //                         for (var i = 0; i < permission.length; i++) {
-                    //                             $('#role' + permission[i]).prop('checked', true);
-                    //                         }
-                    //                     }
-                    //                     $('#roleId').val(id)
-                    //                     form.render();
-                    //                 });
-                    //             })
-                    //             .catch(function(error) {
-                    //                 layer.closeAll();
-                    //                 layer.msg('系统错误', {
-                    //                     icon: 5
-                    //                 });
-                    //             });
-                    //     }
-                    // });
                 }
             }
         });

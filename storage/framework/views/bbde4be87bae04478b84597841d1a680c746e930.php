@@ -15,64 +15,52 @@
                     <i class="fa fa-trash"></i><?php echo trans('admin/setting.all_delete'); ?>
 
                 </button>
-                <button class="layui-btn layui-btn-small modal-catch" data-params='{"content":"#useraddhtml","area":"400px,300px", "title":"<?php echo trans("admin/user.create"); ?>","type":"1"}'>
+                <button class="layui-btn layui-btn-small" @click="addHtml()">
                     <i class="fa fa-plus-square"></i> <?php echo trans('admin/setting.add'); ?>
 
                 </button>
-            </div>
-            <div id="list" class="layui-form">
-                <table id="example" class="layui-table lay-even">
-                    <thead>
-                        <tr>
-                            <th width="30"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="allChoose" lay-skin="primary"></th>
-                            <th width="60"><?php echo trans('admin/user.model.id'); ?></th>
-                            <th><?php echo trans('admin/user.model.username'); ?></th>
-                            <th><?php echo trans('admin/user.model.name'); ?></th>
-                            <th><?php echo trans('admin/user.role'); ?></th>
-                            <th><?php echo trans('admin/setting.make'); ?></th>
-                        </tr>
-                    </thead>
-                    <tbody style="display: none">
-                        <tr v-for="vo in user">
-                            <td width="30"><input type="checkbox" name="checkbox" value="" lay-skin="primary"></td>
-                            <td width="60">{{vo.id}}</td>
-                            <td>{{vo.username}}</td>
-                            <td>{{vo.name}}</td>
-                            <td width="70">
-                                <button class="layui-btn" @click="role(vo.id)">
-                                    <?php echo trans('admin/user.user_role'); ?>
+                <div id="list" class="layui-form">
+                    <table id="example" class="layui-table lay-even">
+                        <thead>
+                            <tr>
+                                <th width="30"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="allChoose" lay-skin="primary"></th>
+                                <th width="60"><?php echo trans('admin/user.model.id'); ?></th>
+                                <th><?php echo trans('admin/user.model.username'); ?></th>
+                                <th><?php echo trans('admin/user.model.name'); ?></th>
+                                <th><?php echo trans('admin/user.role'); ?></th>
+                                <th><?php echo trans('admin/setting.make'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody style="display: none">
+                            <tr v-for="vo in user">
+                                <td width="30"><input type="checkbox" name="checkbox" :value="vo.id" lay-skin="primary"></td>
+                                <td width="60">{{vo.id}}</td>
+                                <td>{{vo.username}}</td>
+                                <td>{{vo.name}}</td>
+                                <td width="70">
+                                    <button class="layui-btn" @click="role(vo.id)">
+                                        <?php echo trans('admin/user.user_role'); ?>
 
-                                </button>
-                            </td>
-                            <td width="152">
-                                <div class="layui-btn-group">
-                                    <button class="layui-btn layui-btn-primary layui-btn-small" @click="edithtml(vo.id)"><i class="layui-icon"></i></button>
-                                    <button class="layui-btn layui-btn-danger layui-btn-small" @click="elDelete(vo.id)"><i class="layui-icon"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="text-right" id="page"></div>
-        </section>
+                                    </button>
+                                </td>
+                                <td width="152">
+                                    <div class="layui-btn-group">
+                                        <button class="layui-btn layui-btn-primary layui-btn-small" @click="edithtml(vo.id)"><i class="layui-icon"></i></button>
+                                        <button class="layui-btn layui-btn-danger layui-btn-small" @click="elDelete(vo.id)"><i class="layui-icon"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right" id="page"></div>
+            </section>
         </div>
     </div>
-    
-    
-    
 </div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('my-js'); ?>
-<script>
-    layui.extend({
-        'user': 'js/user/user',
-    }).use(['user']);
-</script>
-</script>
+<script src="<?php echo e(asset('back/js/user/user.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('admin.user.role', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-<?php echo $__env->make('admin.user.edit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-<?php echo $__env->make('admin.user.create', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

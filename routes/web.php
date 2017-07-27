@@ -37,6 +37,11 @@ Route::group(['namespace' => 'Admin'],function ($router)
 	    Route::post('role/permission','RoleController@permission')->name('role.permission');
 	    Route::resource('role','RoleController');
 	    // 文章
-	    Route::resource('article','RoleController');
+	    Route::group(['prefix' => 'article','as'=>'article.'],function (){
+	    	Route::resource('category','ArticleCategoryController');
+	    });
+	    Route::post('article/switch','ArticleController@changeSwitch')->name('article.switch');
+	    Route::post('article/index','ArticleController@index')->name('article.index');
+	    Route::resource('article','ArticleController');
     });
 });

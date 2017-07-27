@@ -58,7 +58,7 @@ ul.ztree>li>a>span {
             <input type="hidden" name="ids" id="ids" value="{{ $ids }}">
             <form class="layui-form">
                 <div class="layui-form-item">
-                    <input type="hidden" name="id" id="{{ $id }}">
+                    <input type="hidden" name="id" value="{{ $id }}">
                     <ul id="ztree" class="layui-box layui-tree ztree loading">
                     @foreach ($permission as $item)
                         <li><a><cite><input type="checkbox" name="role{{ $item['id'] }}" id="role{{ $item['id'] }}" title="{{ $item['name'] }}" value="{{ $item['id'] }}" lay-filter="role" lay-skin="primary"/></cite></a>

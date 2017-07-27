@@ -17,7 +17,7 @@ layui.define(['form', 'aizxin', 'lang'], function(exports) {
         }
         //角色添加 监听提交
         form.on('submit(roleadd)', function(data) {
-            var index = layer.load(1);
+            var index = aizxin.load(1);
             axios.post(aizxin.U('role'), data.field)
                 .then(function(response) {
                     layer.close(index);
@@ -25,20 +25,20 @@ layui.define(['form', 'aizxin', 'lang'], function(exports) {
                         aizxin.msgS(6, response.data.message, function() {
                             top.layer.closeAll();
                             top.vn.list();
-                        })
+                        });
                     } else {
-                        layer.close(index)
-                        aizxin.msgE(5, response.data.message)
+                        layer.close(index);
+                        aizxin.msgE(5, response.data.message);
                     }
                 }).catch(function(error) {
                     layer.close(index);
-                    aizxin.msgE(5, lang.sys.error)
+                    aizxin.msgE(5, lang.sys.error);
                 });
             return false;
         });
         //角色修改 监听提交
         form.on('submit(roleedit)', function(data) {
-            var index = layer.load(1);
+            var index = aizxin.load(1);
             axios.put(aizxin.U('role') + "/" + data.field.id, data.field)
                 .then(function(response) {
                     layer.close(index);
@@ -46,14 +46,14 @@ layui.define(['form', 'aizxin', 'lang'], function(exports) {
                         aizxin.msgS(6, response.data.message, function() {
                             top.layer.closeAll();
                             top.vn.list();
-                        })
+                        });
                     } else {
-                        layer.close(index)
-                        aizxin.msgE(5, response.data.message)
+                        layer.close(index);
+                        aizxin.msgE(5, response.data.message);
                     }
                 }).catch(function(error) {
                     layer.close(index);
-                    aizxin.msgE(5, lang.sys.error)
+                    aizxin.msgE(5, lang.sys.error);
                 });
             return false;
         });
@@ -66,7 +66,7 @@ layui.define(['form', 'aizxin', 'lang'], function(exports) {
                     $(n).find('input').prop("checked", function() {
                         return data.elem.checked;
                     });
-                })
+                });
             }
             //单击二级菜单
             var eel = el.parent('ul').parent("li");
@@ -76,7 +76,7 @@ layui.define(['form', 'aizxin', 'lang'], function(exports) {
                     if ($(n).find('input').prop("checked") && !data.elem.checked) {
                         had_check = false;
                     }
-                })
+                });
                 if (had_check) {
                     eel.children('a').find('input').prop("checked", function() {
                         return data.elem.checked;
@@ -86,13 +86,13 @@ layui.define(['form', 'aizxin', 'lang'], function(exports) {
             // 单击三级菜单
             var sel = eel.parent('ul').parent("li");
             if (sel.length > 0) {
-                var had_check = true;
+                var had_check_3 = true;
                 sel.children('ul').find('li').each(function(i, n) {
                     if ($(n).find('input').prop("checked") && !data.elem.checked) {
-                        had_check = false;
+                        had_check_3 = false;
                     }
-                })
-                if (had_check) {
+                });
+                if (had_check_3) {
                     sel.children('a').find('input').prop("checked", function() {
                         return data.elem.checked;
                     });
@@ -103,21 +103,21 @@ layui.define(['form', 'aizxin', 'lang'], function(exports) {
         });
         //角色权限 监听提交
         form.on('submit(rolepermissionadd)', function(data) {
-            var index = layer.load(1);
+            var index = aizxin.load(1);
             axios.post(aizxin.U('role/permission'), data.field)
                 .then(function(response) {
                     layer.close(index);
                     if (response.data.code == 200) {
                         aizxin.msgS(6, response.data.message, function() {
                             top.layer.closeAll();
-                        })
+                        });
                     } else {
-                        layer.close(index)
-                        aizxin.msgE(5, response.data.message)
+                        layer.close(index);
+                        aizxin.msgE(5, response.data.message);
                     }
                 }).catch(function(error) {
                     layer.close(index);
-                    aizxin.msgE(5, lang.sys.error)
+                    aizxin.msgE(5, lang.sys.error);
                 });
             return false;
         });

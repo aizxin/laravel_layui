@@ -1,51 +1,54 @@
 <?php
 namespace App\Http\Controllers\Admin;
+
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Aizxin\Services\Admin\RoleService;
+use Aizxin\Services\Admin\ArticleService;
 
 class ArticleController extends Controller
 {
-
     protected $service;
 
-    public function __construct(RoleService $service)
+    public function __construct(ArticleService $service)
     {
         $this->service = $service;
     }
+
+
     /**
-     *  [index 角色列表]
+     *  [index 文章列表]
      *  臭虫科技
      *  @author chouchong
-     *  @DateTime 2017-04-13T15:03:09+0800
-     *  @return   [type]                   [description]
+     *  @DateTime 2017-04-13T15:03:20+0800
+     *  @param    Request                  $request [description]
+     *  @return   [type]                            [description]
      */
     public function index(Request $request)
     {
         if($request->ajax()){
             return $this->service->index();
         }
-        return view('admin.role.index');
+        return view('admin.article.article.index');
     }
     /**
-     *  [create 角色添加视图]
+     *  [create 文章添加视图]
      *  臭虫科技
      *  @author chouchong
-     *  @DateTime 2017-04-13T16:04:54+0800
+     *  @DateTime 2017-04-11T19:33:57+0800
      *  @return   [type]                   [description]
      */
     public function create()
     {
-        return $this->service->permission();
+        $category = $this->service->articleCategory();
+        return view('admin.article.article.create',compact('category'));
     }
-
     /**
-     *  [store 角色添加操作]
+     *  [store 文章添加操作]
      *  臭虫科技
      *  @author chouchong
-     *  @DateTime 2017-04-13T16:05:26+0800
-     *  @param    Request                  $request [description]
+     *  @DateTime 2017-04-11T19:34:29+0800
+     *  @param    PermissionCreateRequest  $request [description]
      *  @return   [type]                            [description]
      */
     public function store(Request $request)
@@ -53,36 +56,41 @@ class ArticleController extends Controller
         return $this->service->store($request);
     }
 
+
     /**
-     *  [show 角色详情]
-     *  臭虫科技
-     *  @author chouchong
-     *  @DateTime 2017-04-13T18:48:39+0800
-     *  @param    [type]                   $id [description]
-     *  @return   [type]                       [description]
+     * Display the specified resource.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return $this->service->show($id);
+
     }
 
+
     /**
-     *  [edit 角色更新视图]
+     *  [edit 文章编辑视图]
      *  臭虫科技
      *  @author chouchong
-     *  @DateTime 2017-04-13T19:31:40+0800
+     *  @DateTime 2017-04-12T19:28:55+0800
      *  @param    [type]                   $id [description]
      *  @return   [type]                       [description]
      */
     public function edit($id)
     {
-        return $this->service->findPermission($id);
+        $category = $this->service->articleCategory();
+        $article = $this->service->edit($id);
+        return view('admin.article.article.edit',compact('category','article'));
     }
+
+
     /**
-     *  [update description]
+     *  [update 文章更新操作]
      *  臭虫科技
      *  @author chouchong
-     *  @DateTime 2017-04-13T19:12:12+0800
+     *  @DateTime 2017-04-12T21:16:09+0800
      *  @param    Request                  $request [description]
      *  @param    [type]                   $id      [description]
      *  @return   [type]                            [description]
@@ -94,10 +102,10 @@ class ArticleController extends Controller
 
 
     /**
-     *  [destroy 角色删除]
+     *  [destroy 删除文章]
      *  臭虫科技
      *  @author chouchong
-     *  @DateTime 2017-04-13T16:57:55+0800
+     *  @DateTime 2017-04-12T18:50:29+0800
      *  @param    [type]                   $id [description]
      *  @return   [type]                       [description]
      */
@@ -105,16 +113,17 @@ class ArticleController extends Controller
     {
         return $this->service->destroy($id);
     }
+
     /**
-     *  [permission 角色权限添加]
-     *  chouchong.com
-     *  @author Sow
-     *  @DateTime 2017-04-15T12:40:38+0800
-     *  @param    Request                  $request [description]
-     *  @return   [type]                            [description]
+     *  [changeSwitch 文章排序]
+     *  臭虫科技
+     *  @author qingfeng
+     *  @DateTime 2017-04-26T19:00:17+0800
+     *  @param    string                   $value [description]
+     *  @return   [type]                          [description]
      */
-    public function permission(Request $request)
+    public function changeSwitch(Request $request)
     {
-        return $this->service->rolePermission($request);
+        return $this->service->changeSwitch($request);
     }
 }

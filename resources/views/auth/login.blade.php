@@ -30,7 +30,7 @@
                     </div>
                     <div class="layui-form-item">
                         <div class="">
-                        <button class="layui-input layui-btn layui-btn-primary" lay-submit lay-filter="login">
+                        <button class="layui-input layui-btn layui-btn-primary" lay-submit lay-filter="login" style="font-size: 20px;color: #fff;">
                             登&nbsp;&nbsp;&nbsp;&nbsp;录
                         </button>
                         </div>
