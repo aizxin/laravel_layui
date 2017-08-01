@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-07-26 17:59:34
+Date: 2017-08-01 14:10:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,11 +31,13 @@ CREATE TABLE `article` (
   `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `cid` (`articleCategoryId`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='文章表';
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='文章表';
 
 -- ----------------------------
 -- Records of article
 -- ----------------------------
+INSERT INTO `article` VALUES ('21', '4', '11', '管理员', null, '555', '<p>222</p>', '2017-07-31 17:31:24', '2017-07-31 17:31:24');
+INSERT INTO `article` VALUES ('22', '1', '33', '管理员', null, '555', '<p>444eee</p><p><br></p>', '2017-08-01 14:08:24', '2017-08-01 14:08:24');
 
 -- ----------------------------
 -- Table structure for article_category
@@ -52,19 +54,13 @@ CREATE TABLE `article_category` (
   KEY `parent_id` (`parent_id`),
   KEY `name` (`name`),
   KEY `status` (`status`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='文章分类表';
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='文章分类表';
 
 -- ----------------------------
 -- Records of article_category
 -- ----------------------------
 INSERT INTO `article_category` VALUES ('1', '0', '常见问题', '1', '2017-04-19 12:43:45', '2017-05-03 14:42:23');
-INSERT INTO `article_category` VALUES ('2', '0', '学车须知', '1', '2017-04-19 12:57:34', '2017-04-19 12:58:35');
-INSERT INTO `article_category` VALUES ('3', '0', '关于我们', '1', '2017-04-19 12:57:50', '2017-04-19 12:57:50');
 INSERT INTO `article_category` VALUES ('4', '0', '法律', '1', '2017-04-21 20:17:41', '2017-04-21 20:17:41');
-
--- ----------------------------
--- Records of article_category
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for migrations
@@ -115,7 +111,7 @@ CREATE TABLE `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_slug_unique` (`slug`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of permissions
@@ -156,7 +152,7 @@ INSERT INTO `permissions` VALUES ('33', '32', '0', '文章添加视图', 'articl
 INSERT INTO `permissions` VALUES ('34', '32', '0', '文章添加操作', 'article.store', '文章添加操作', null, '1', null, '2017-04-19 12:07:10', '2017-04-19 12:07:10');
 INSERT INTO `permissions` VALUES ('35', '32', '0', '文章更新视图', 'article.edit', '文章更新视图', null, '1', null, '2017-04-19 12:07:57', '2017-04-19 12:07:57');
 INSERT INTO `permissions` VALUES ('36', '32', '0', '文章更新操作', 'article.update', '文章更新操作', null, '1', null, '2017-04-19 12:09:18', '2017-04-19 12:09:18');
-INSERT INTO `permissions` VALUES ('37', '32', '0', '文章删除', 'article.destroy', '文章删除', null, '1', null, '2017-04-19 12:10:02', '2017-04-19 13:05:20');
+INSERT INTO `permissions` VALUES ('37', '32', '0', '文章删除', 'article.destroy', '文章删除', null, '1', null, '2017-04-19 12:10:02', '2017-07-27 17:58:04');
 
 -- ----------------------------
 -- Table structure for permission_role
@@ -171,7 +167,7 @@ CREATE TABLE `permission_role` (
   PRIMARY KEY (`id`),
   KEY `permission_role_permission_id_index` (`permission_id`),
   KEY `permission_role_role_id_index` (`role_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of permission_role
@@ -208,6 +204,13 @@ INSERT INTO `permission_role` VALUES ('29', '29', '1', '2017-04-07 13:07:50', '2
 INSERT INTO `permission_role` VALUES ('30', '30', '1', '2017-04-07 13:07:50', '2017-04-07 13:07:50');
 INSERT INTO `permission_role` VALUES ('31', '1', '2', '2017-04-07 13:07:50', '2017-04-07 13:07:50');
 INSERT INTO `permission_role` VALUES ('32', '2', '2', '2017-04-07 13:07:50', '2017-04-07 13:07:50');
+INSERT INTO `permission_role` VALUES ('33', '31', '1', '2017-07-27 17:58:22', '2017-07-27 17:58:22');
+INSERT INTO `permission_role` VALUES ('34', '32', '1', '2017-07-27 17:58:22', '2017-07-27 17:58:22');
+INSERT INTO `permission_role` VALUES ('35', '33', '1', '2017-07-27 17:58:22', '2017-07-27 17:58:22');
+INSERT INTO `permission_role` VALUES ('36', '34', '1', '2017-07-27 17:58:22', '2017-07-27 17:58:22');
+INSERT INTO `permission_role` VALUES ('37', '35', '1', '2017-07-27 17:58:22', '2017-07-27 17:58:22');
+INSERT INTO `permission_role` VALUES ('38', '36', '1', '2017-07-27 17:58:22', '2017-07-27 17:58:22');
+INSERT INTO `permission_role` VALUES ('39', '37', '1', '2017-07-27 17:58:22', '2017-07-27 17:58:22');
 
 -- ----------------------------
 -- Table structure for permission_user
@@ -294,7 +297,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'admin', '管理员', '709344897@qq.com', '$2y$10$ijzRzxk3mSJuQi0MPcpyZeDmePGk6lu0TLBWo7kVivuvJocJ6QOBa', 'wLgFeNe45c3kaMFHgjDEidCJHePkZO5lWFZgv2h05mQ7HSU9FtjZ7uhoIcCe', '2017-04-07 13:07:50', '2017-04-07 13:07:50');
+INSERT INTO `users` VALUES ('1', 'admin', '管理员', '709344897@qq.com', '$2y$10$ijzRzxk3mSJuQi0MPcpyZeDmePGk6lu0TLBWo7kVivuvJocJ6QOBa', 'vq2StypvW2sXE0kI7ehkM9usIxRPVP0Qb1ly5KJZTit8V8eMmScE70QILtyw', '2017-04-07 13:07:50', '2017-04-07 13:07:50');
 INSERT INTO `users` VALUES ('2', 'Kiley', 'Pierre Smitham', 'metz.corine@example.net', '$2y$10$oVtKN2BNE/A6EZP6bTUreu6gX1r9vGyfdh.JznKomCiD7J1NmVd62', 'uudegKrfcX', '2017-04-07 13:07:51', '2017-04-07 13:07:51');
 INSERT INTO `users` VALUES ('3', 'Joel', 'Spencer Kirlin', 'ymclaughlin@example.com', '$2y$10$oVtKN2BNE/A6EZP6bTUreu6gX1r9vGyfdh.JznKomCiD7J1NmVd62', 'xqMD4dFCxB', '2017-04-07 13:07:51', '2017-04-07 13:07:51');
 INSERT INTO `users` VALUES ('4', 'Lelah1', 'Lucinda Moore', 'walsh.penelope@example.net', '$2y$10$gn/tO/N1bFoX7r5VOCA3d.kE.UVsOlNLhFQC/b7SqBj8WIGwaeUj.', '7OKwsN0RHT', '2017-04-07 13:07:51', '2017-04-17 14:47:10');

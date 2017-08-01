@@ -43,6 +43,29 @@ class MenuPresenter
 		return $html;
 	}
 	/**
+	 *  [topCateList description]
+	 *  臭虫科技
+	 *  @author chouchong
+	 *  @DateTime 2017-07-31T11:10:39+0800
+	 *  @param    [type]                   $trans [description]
+	 *  @param    [type]                   $menus [description]
+	 *  @param    string                   $pid   [description]
+	 *  @return   [type]                          [description]
+	 */
+	public function topCateList($trans,$menus,$pid = '')
+	{
+		$html = '<option value="0">'.$trans.'</option>';
+		if ($menus) {
+			foreach ($menus as $v) {
+				$html .= '<option value="'.$v['id'].'" '.$this->checkMenu($v['id'],$pid).'>'.$v['name'].'</option>';
+				foreach ($v['child'] as $vv) {
+					$html .= '<option value="'.$vv['id'].'" '.$this->checkMenu($vv['id'],$pid).'>  ├  '.$vv['name'].'</option>';
+				}
+			}
+		}
+		return $html;
+	}
+	/**
 	 *  [checkMenu 判断是否选中]
 	 *  chouchong.com
 	 *  @author Sow

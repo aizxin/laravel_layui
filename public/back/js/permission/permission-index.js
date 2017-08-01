@@ -5,8 +5,8 @@ layui.define(['global', 'lang', 'form', 'laypage', 'aizxin'], function(exports) 
     var $ = layui.jquery,
         layer = layui.layer,
         form = layui.form(),
-        lang = layui.lang,
         laypage = layui.laypage,
+        lang = layui.lang,
         aizxin = layui.aizxin;
     $(function() {
         window.vn = new Vue({

@@ -80,6 +80,8 @@ return [
 	],
 	'setting' => [
 		'update_success' => '保存配置成功',
+		'upload_destroy_success' => '删除图片成功',
+		'upload_destroy_error' => '删除图片失败',
 	],
 	'link' => [
 		'create_success' => '添加友情链接成功',

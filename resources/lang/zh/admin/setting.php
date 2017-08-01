@@ -26,5 +26,16 @@ return [
 	'all_delete'=>'批量删除',
 	'add'=>'添加',
 	'make'=>'操作',
-	'page'=>'页数'
+	'page'=>'页数',
+	'up'=>'启用',
+	'down'=>'禁用',
+	'buy'=>'上架',
+	'nobuy'=>'下架',
+	'sfyc' => '是否显藏',
+	'show' =>'显示',
+	'hide' =>'隐藏',
+	'upload_img' => '上传图片',
+	'select' => '查找',
+	'excel'  => '导出Excel',
+	'sort' => '排序'
 ];

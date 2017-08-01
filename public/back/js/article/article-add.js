@@ -1,20 +1,12 @@
-layui.define(['form', 'global', 'upload'], function(exports) {
+layui.define(['form', 'global', 'upload', 'lang', 'aizxin'], function(exports) {
 	var form = layui.form(),
 		$ = layui.jquery,
 		layer = layui.layer,
 		upload = layui.upload,
-		Aizxin = layui.global;
+		lang = layui.lang,
+		aizxin = layui.aizxin;
 	var ipth;
-
 	$(function() {
-		// 图片上传
-		Aizxin.uploadQiniu('#article-upload', 'LAY_demo_upload', $('.i-delete'));
-		// 文件删除
-		$('.ad-upload').on('click', function() {
-			var url = LAY_demo_upload.src;
-			Aizxin.deleQiniu(url, $("#LAY_demo_upload"));
-		});
-
 		function printLog(title, info) {
 			window.console && console.log(title, info);
 		}
@@ -27,7 +19,7 @@ layui.define(['form', 'global', 'upload'], function(exports) {
 			var uploader = Qiniu.uploader({
 				runtimes: 'html5,flash,html4', //上传模式,依次退化
 				browse_button: btnId, //上传选择的点选按钮，**必需**
-				uptoken_url: Aizxin.U('qiniu'),
+				uptoken_url: aizxin.U('qiniu'),
 				//Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
 				// uptoken : '<Your upload token>',
 				//若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
@@ -39,7 +31,7 @@ layui.define(['form', 'global', 'upload'], function(exports) {
 				//bucket 域名，下载资源时用到，**必需**
 				container: containerId, //上传区域DOM ID，默认是browser_button的父元素，
 				max_file_size: '100mb', //最大文件体积限制
-				flash_swf_url: Aizxin.U('back') + '/plugin/qiniu/js/Moxie.swf', //引入flash,相对路径
+				flash_swf_url: aizxin.U('back') + '/plugin/qiniu/js/Moxie.swf', //引入flash,相对路径
 				filters: {
 					mime_types: [
 						//只允许上传图片文件 （注意，extensions中，逗号后面不要加空格）
@@ -122,69 +114,42 @@ layui.define(['form', 'global', 'upload'], function(exports) {
 		// 文章添加
 		form.on('submit(addarticlestore)', function(data) {
 			data.field.id = 0;
-			var url = LAY_demo_upload.src;
-			data.field.thumb = url.indexOf(window.conf.QINIU_DOMAINS_DEFAULT) > 0 ? url : '';
 			data.field.content = editor.$txt.html();
-			var index = layer.load(1, {
-				shade: 0.5,
-				shade: 0.5
+			var index = aizxin.load(1);
+			axios.post(aizxin.U('article'), data.field).then(function(response) {
+				layer.close(index);
+				if (response.data.code == 200) {
+					aizxin.msgS(6, response.data.message, function() {
+						top.layer.closeAll();
+						top.vn.list();
+					})
+				} else {
+					aizxin.msgE(5, response.data.message)
+				}
+			}).catch(function(error) {
+				layer.close(index);
+				aizxin.msgE(5, lang.sys.error)
 			});
-			axios.post(Aizxin.U('article'), data.field)
-				.then(function(response) {
-					layer.close(index);
-					if (response.data.code == 200) {
-						layer.msg(response.data.message, {
-							time: 1000,
-							shade: 0.5
-						}, function() {
-							window.location.href = Aizxin.U('article');
-						});
-					} else {
-						layer.msg(response.data.message, {
-							icon: 5,
-							shade: 0.5
-						});
-					}
-				}).catch(function(error) {
-					layer.close(index);
-					layer.msg('系统错误', {
-						icon: 5,
-						shade: 0.5
-					});
-				});
 			return false;
 		});
 		// 文章修改
 		form.on('submit(editarticleupdate)', function(data) {
-			var url = LAY_demo_upload.src;
-			data.field.thumb = url.indexOf(window.conf.QINIU_DOMAINS_DEFAULT) > 0 ? url : '';
 			data.field.content = editor.$txt.html();
-			var index = layer.load(1, {
-				shade: 0.5
+			var index = aizxin.load(1);
+			axios.post(aizxin.U('article'), data.field).then(function(response) {
+				layer.close(index);
+				if (response.data.code == 200) {
+					aizxin.msgS(6, response.data.message, function() {
+						top.layer.closeAll();
+						top.vn.list();
+					})
+				} else {
+					aizxin.msgE(5, response.data.message)
+				}
+			}).catch(function(error) {
+				layer.close(index);
+				aizxin.msgE(5, lang.sys.error)
 			});
-			axios.post(Aizxin.U('article'), data.field)
-				.then(function(response) {
-					layer.close(index);
-					if (response.data.code == 200) {
-						layer.msg(response.data.message, {
-							time: 1000,
-							shade: 0.5
-						}, function() {
-							window.location.href = Aizxin.U('article');
-						});
-					} else {
-						layer.msg(response.data.message, {
-							icon: 5,
-							shade: 0.5
-						});
-					}
-				}).catch(function(error) {
-					layer.close(index);
-					layer.msg('系统错误', {
-						icon: 5,
-						shade: 0.5
-					});
-				});
 			return false;
 		});
 	});

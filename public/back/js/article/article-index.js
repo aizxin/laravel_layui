@@ -1,14 +1,16 @@
 /**
  *  公用列表
  */
-layui.define(['global', 'form', 'laypage'], function(exports) {
+layui.define(['global', 'form', 'laypage', 'lang', 'aizxin'], function(exports) {
     var $ = layui.jquery,
         layer = layui.layer,
         form = layui.form(),
         Aizxin = layui.global,
-        laypage = layui.laypage;
+        laypage = layui.laypage,
+        lang = layui.lang,
+        aizxin = layui.aizxin;
     $(function() {
-        var aarticleList = new Vue({
+        window.vn = new Vue({
             el: '#articlelist',
             data: {
                 article: [],
@@ -26,33 +28,20 @@ layui.define(['global', 'form', 'laypage'], function(exports) {
                         id: vo.id,
                         rank: vo.rank
                     };
-                    layer.confirm('确认修改排序?', {
-                        icon: 3,
-                        title: '提示'
-                    }, function(index) {
-                        axios.post(Aizxin.U('article/switch'), data)
+                    aizxin.confirm(lang.sys.title, lang.article.sort, function(index) {
+                        axios.post(aizxin.U('article/switch'), data)
                             .then(function(response) {
                                 if (response.data.code == 400) {
-                                    layer.msg('修改失败', {
-                                        shade: 0.5
-                                    });
+                                    aizxin.msgE(6, response.data.message);
                                 }
                             }).catch(function(error) {
-                                layer.msg('系统错误', {
-                                    shade: 0.5
-                                });
+                                aizxin.msgE(5, response.data.message);
                             });
-                        layer.close(index);
-                    }, function(index) {
                         layer.close(index);
                     });
                 },
                 addhtml: function() {
-                    var index = layer.load(1, {
-                        shade: 0.5,
-                        shade: 0.5
-                    });
-                    window.location.href = Aizxin.U('article/create');
+                    aizxin.open(lang.article.create, aizxin.U("article/create"), ['893px', '860px']);
                 },
                 changelist: function() {
                     this.search.page = 1;
@@ -64,7 +53,7 @@ layui.define(['global', 'form', 'laypage'], function(exports) {
                         shade: 0.5
                     });
                     var _this = this;
-                    axios.post(Aizxin.U('article/index'), this.search)
+                    axios.post(aizxin.U('article/index'), this.search)
                         .then(function(response) {
                             if (_this.pages != response.data.data.last_page) {
                                 _this.$set('pages', response.data.data.last_page);
@@ -105,53 +94,35 @@ layui.define(['global', 'form', 'laypage'], function(exports) {
                         }
                     });
                     if (!ids.length) {
-                        layer.msg('没有删除的节点', {
-                            icon: 5,
-                            shade: 0.5
-                        });
+                        aizxin.msgE(5, lang.article.delE);
                         return;
                     };
                     this.elDelete(ids.join(","));
                 },
                 elDelete: function(id) {
                     var _this = this;
-                    layer.confirm('确认是否删除', {
-                        icon: 1,
-                        title: '删除文章'
-                    }, function(index) {
+                    aizxin.confirm(lang.sys.del, lang.sys.clear + lang.article.article, function(index) {
                         layer.close(index);
                         var indexload = layer.load(1, {
                             shade: 0.5
                         });
-                        axios.delete(Aizxin.U('article') + '/' + id).then(function(response) {
+                        axios.delete(aizxin.U('article') + '/' + id).then(function(response) {
+                            layer.close(indexload);
                             if (response.data.code == 200) {
-                                layer.close(indexload);
-                                layer.msg(response.data.message, {
-                                    icon: 6,
-                                    shade: 0.5
+                                aizxin.msgS(6, response.data.message, function() {
+                                    _this.list();
                                 })
-                                _this.list();
                             } else {
-                                layer.close(indexload);
-                                layer.msg(response.data.message, {
-                                    icon: 5,
-                                    shade: 0.5
-                                })
+                                aizxin.msgE(5, response.data.message);
                             }
                         }).catch(function(error) {
                             layer.closeAll();
-                            layer.msg('系统错误', {
-                                icon: 5,
-                                shade: 0.5
-                            });
+                            aizxin.msgE(5, response.sys.error);
                         });
                     });
                 },
                 edithtml: function(id) {
-                    var index = layer.load(1, {
-                        shade: 0.5
-                    });
-                    window.location.href = Aizxin.U('article') + '/' + id + '/edit';
+                    aizxin.open(lang.article.edit, aizxin.U('article') + '/' + id + '/edit', ['893px', '860px']);
                 },
             }
         });

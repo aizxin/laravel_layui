@@ -4,7 +4,7 @@ namespace Aizxin\Validators;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\LaravelValidator;
 
-class AdValidator extends LaravelValidator {
+class ArticleCategoryValidator extends LaravelValidator {
 
    /**
     *  [$rules 规则]
@@ -23,6 +23,6 @@ class AdValidator extends LaravelValidator {
      *  @var [type]
      */
     protected $messages = [
-        'name.required' => '广告名不能为空',
+        'name.required' => '分类不能为空',
 	];
 }

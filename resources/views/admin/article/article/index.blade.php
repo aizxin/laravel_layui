@@ -67,9 +67,5 @@
 </div>
 @endsection
 @section('my-js')
-<script>
-    layui.extend({
-        'article-index': 'js/article/article-index'
-    }).use(['article-index']);
-</script>
+<script src="{{ asset('back/js/article/article-index.js') }}"></script>
 @endsection

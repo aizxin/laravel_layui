@@ -44,7 +44,6 @@ layui.define(['form', 'aizxin', 'lang'], function(exports) {
 							top.vn.toplist();
 						})
 					} else {
-						layer.close(index)
 						aizxin.msgE(5, response.data.message)
 					}
 				}).catch(function(error) {

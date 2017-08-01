@@ -1,9 +1,10 @@
-layui.define(['global', 'form', 'laypage'], function(exports) {
+layui.define(['global', 'form', 'laypage', 'lang', 'aizxin'], function(exports) {
 	var $ = layui.jquery,
 		layer = layui.layer,
 		form = layui.form(),
 		laypage = layui.laypage,
-		Aizxin = layui.global;
+		lang = layui.lang,
+		aizxin = layui.aizxin;
 	$(function() {
 		var articleCategoryList1 = new Vue({
 			el: '#articleCategoryList',
@@ -21,16 +22,12 @@ layui.define(['global', 'form', 'laypage'], function(exports) {
 			methods: {
 				list: function() {
 					var _this = this;
-					axios.get(Aizxin.U('article/category/create'))
-						.then(function(response) {
-							_this.$set('category', response.data.data);
-							_this.selectOption();
-						}).catch(function(error) {
-							layer.msg('系统错误', {
-								icon: 5,
-								shade: 0.5
-							});
-						});
+					axios.get(aizxin.U('article/category/create')).then(function(response) {
+						_this.$set('category', response.data.data);
+						_this.selectOption();
+					}).catch(function(error) {
+						aizxin.msgE(5, lang.permission.delE);
+					});
 					$('#ArticleCategoryReset')[0].reset();
 				},
 				showChild: function(index, vo) {
@@ -77,18 +74,12 @@ layui.define(['global', 'form', 'laypage'], function(exports) {
 				},
 				deleteCategory: function(vo) {
 					if (vo.child.length > 0) {
-						layer.msg('有子分类,不能删除', {
-							icon: 5,
-							shade: 0.5
-						});
+						aizxin.msgE(5, lang.article.childE);
 						return;
 					}
 					var _this = this;
-					layer.confirm('确认是否删除', {
-						icon: 1,
-						title: '删除管理员'
-					}, function(index) {
-						axios.delete(Aizxin.U('article/category') + '/' + vo.id).then(function(response) {
+					aizxin.confirm(lang.sys.del, lang.sys.clear + lang.article.index, function(index) {
+						axios.delete(aizxin.U('article/category') + '/' + vo.id).then(function(response) {
 								layer.close(index);
 								if (response.data.code == 200) {
 									layer.msg(response.data.message, {
@@ -110,7 +101,7 @@ layui.define(['global', 'form', 'laypage'], function(exports) {
 				},
 				selectOption: function() {
 					var _this = this;
-					var html = '<select name="parent_id"><option value="0">顶级分类</option>';
+					var html = '<select name="parent_id"><option value="0">' + lang.article.parent + '</option>';
 					// layui.each(this.category, function(index, item) {
 					// 	var isselect = _this.parent_id == item.id ? 'selected' : '';
 					// 	html += '<option ' + isselect + ' value="' + item.id + '">' + item.name + '</option>';
@@ -131,14 +122,11 @@ layui.define(['global', 'form', 'laypage'], function(exports) {
 				shade: 0.5
 			});
 			data.field.status = data.field.status != undefined ? 1 : 0;
-			axios.post(Aizxin.U('article/category'), data.field)
+			axios.post(aizxin.U('article/category'), data.field)
 				.then(function(response) {
 					layer.close(index);
 					if (response.data.code == 200) {
-						layer.msg(response.data.message, {
-							time: 1000,
-							shade: 0.5
-						}, function() {
+						aizxin.msgS(6, response.data.message, function() {
 							$('#acid').val(0);
 							articleCategoryList1.list();
 							articleCategoryList1.$set('parent_id', 0);
@@ -146,17 +134,11 @@ layui.define(['global', 'form', 'laypage'], function(exports) {
 							form.render('select');
 						});
 					} else {
-						layer.msg(response.data.message, {
-							icon: 5,
-							shade: 0.5
-						});
+						aizxin.msgE(5, response.data.message)
 					}
 				}).catch(function(error) {
 					layer.close(index);
-					layer.msg('系统错误', {
-						icon: 5,
-						shade: 0.5
-					});
+					aizxin.msgE(5, lang.sys.error)
 				});
 			return false;
 		});

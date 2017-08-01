@@ -14,12 +14,14 @@ class PermissionService
 {
 	protected $permissionRepo;
 	protected $pValidator;
+	
 	public function __construct(
 		PermissionRepositoryEloquent $permissionRepo,
 		PermissionValidator $pValidator)
 	{
 		$this->permissionRepo = $permissionRepo;
 		$this->pValidator = $pValidator;
+		
 	}
 	/**
 	 *  [index description]

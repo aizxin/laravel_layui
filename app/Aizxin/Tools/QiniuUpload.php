@@ -28,7 +28,21 @@ class QiniuUpload {
             $path = $disk->downloadUrl($path.$fileName);
             return $path;
         }
-        return '';
+        return false;
+    }
+    /**
+     *  [qiniuToken 获取tokrn]
+     *  臭虫科技
+     *  @author chouchong
+     *  @DateTime 2017-04-19T19:31:30+0800
+     *  @return   [type]                   [description]
+     */
+    public function qiniuToken()
+    {
+        // 构建鉴权对象
+        $auth = new Auth(env('QINIU_AXXESS_KEY'), env('QINIU_SECRET_KEY'));
+        // 生成上传 Token
+        return $auth->uploadToken(env('QINIU_BUCKET'));
     }
     /**
      *  [qiniuBase64 七牛base64上传]
@@ -57,6 +71,25 @@ class QiniuUpload {
         }
     }
     /**
+     *  [qiniuBase64 七牛base64上传]
+     *  izxin.com
+     *  @author qingfeng
+     *  @DateTime 2016-09-26T15:16:34+0800
+     *  @param    [type]                   $base64 [description]
+     *  @return   [type]                           [description]
+     */
+    public function qiniuPath($path)
+    {
+        $disk = QiniuStorage::disk('qiniu');
+        $fileName = md5(time()).'.png';
+        $bool = $disk->fetch($path, $fileName);
+        if ($bool) {
+            $path = $disk->downloadUrl($fileName);
+            return $path;
+        }
+        return false;
+    }
+    /**
      *  [qiniuDelete 七牛删除图片]
      *  臭虫科技
      *  @author chouchong
@@ -83,5 +116,18 @@ class QiniuUpload {
         } else {
             return true;
         }
+    }
+        /**
+     *  [qiniuDeleteAll description]
+     *  臭虫科技
+     *  @author qingfeng
+     *  @DateTime 2017-04-25T13:02:30+0800
+     *  @param    [type]                   $fileName [description]
+     *  @return   [type]                             [description]
+     */
+    public function qiniuDeleteAll($fileName)
+    {
+        $disk = QiniuStorage::disk('qiniu');
+        return $disk->delete($fileName);
     }
 }

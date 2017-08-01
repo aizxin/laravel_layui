@@ -20,6 +20,7 @@ class UserService {
 	protected $uValidator;
     protected $userValidator;
     protected $roleRepo;
+    
 	public function __construct(
 		UserRepositoryEloquent $userRepo,
 		UserLoginValidator $uValidator,
@@ -29,6 +30,7 @@ class UserService {
 		$this->userRepo = $userRepo;
 		$this->uValidator = $uValidator;
         $this->userValidator = $userValidator;
+        
 	}
 	/**
 	 *  [postLogin 管理员登录]

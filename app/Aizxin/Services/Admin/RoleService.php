@@ -17,6 +17,7 @@ class RoleService
 	protected $roleRepo;
 	protected $permissionRepo;
 	protected $rValidator;
+	
 	public function __construct(
 		RoleRepositoryEloquent $roleRepo,
 		PermissionRepositoryEloquent $permissionRepo,
@@ -25,6 +26,7 @@ class RoleService
 		$this->roleRepo = $roleRepo;
 		$this->permissionRepo = $permissionRepo;
 		$this->rValidator = $rValidator;
+		
 	}
 	/**
 	 *  [index 角色列表]

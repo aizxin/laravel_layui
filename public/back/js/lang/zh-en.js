@@ -15,7 +15,8 @@ layui.define('jquery', function(exports) {
             error: '系统错误',
             del: '确认是否删除',
             clear: '删除',
-            select: '请选择'
+            select: '请选择',
+            title: '提示'
         },
         setting: {
 
@@ -42,33 +43,15 @@ layui.define('jquery', function(exports) {
             delE: '没有删除的角色',
             permission: '角色权限分配'
         },
-        team: {
-            index: '队伍',
-            detail: '队伍详情',
-            delE: '没有删除的队伍',
-        },
-        orders: {
-            index: '订单',
-            delE: '没有删除的订单',
-        },
-        award: {
-            index: '奖励',
-            hand: '确认奖励已发送',
-            delE: '没有删除的奖励',
-        },
-        apply: {
-            index: '报名',
-            delE: '没有删除的报名',
-        },
-        feedback: {
-            index: '反馈信息',
-            delE: '没有删除的反馈信息',
-        },
-        activity: {
-            index: '活动',
-            delE: '没有删除的活动',
-            create: '活动添加',
-            edit: '活动编辑',
+        article: {
+            childE: '有子分类,不能删除',
+            index: '分类',
+            parent: '顶级分类',
+            sort: '确认修改排序?',
+            create: '文章添加',
+            edit: '文章修改',
+            delE: '没有删除的文章',
+            article: '文章'
         },
         verify: {
 

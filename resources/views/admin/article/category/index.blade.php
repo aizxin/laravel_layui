@@ -7,6 +7,9 @@
 	.i-size em{
 		font-size: 16px;
 	}
+	.site-demo-area{
+		width: 50%;
+	}
 </style>
 @endsection
 @section('content')
@@ -97,9 +100,5 @@
     </div>
 </div>
 @endsection @section('my-js')
-<script>
-    layui.extend({
-        'article-category': 'js/article/article-category'
-    }).use(['article-category']);
-</script>
+<script src="{{ asset('back/js/article/article-category.js') }}"></script>
 @endsection

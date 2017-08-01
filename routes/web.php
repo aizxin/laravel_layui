@@ -21,6 +21,8 @@ Route::group(['namespace' => 'Admin'],function ($router)
 	Route::get('/logout','AuthController@logout');
 	// icon
 	Route::get('/icon','IconController@index');
+	// 七牛
+	Route::resource('qiniu','QiniuController');
 	// 已经登录
     Route::group(['middleware' => ['admin.auth','role.auth']], function () {
 

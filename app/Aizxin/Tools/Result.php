@@ -4,14 +4,12 @@ namespace Aizxin\Tools;
 class Result {
 
     public $code;
-    public $status;
     public $message;
 
     public function __construct()
     {
         $this->code = 200;
-        $this->status = 'success';
-        $this->message = '';
+        $this->message = '获取成功';
     }
     public function toJson()
     {
